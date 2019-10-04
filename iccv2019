@@ -1,4 +1,6 @@
 # Few shot learning 
+(There is a survey in zhihu: https://zhuanlan.zhihu.com/p/61215293)
+
 1. Few-ShotLearningwithGlobalClassRepresentations  
 This paper provides a new trick that combines the base classes and novel classes in episode training, representing a class
 with its centric point of all in-class featrues extracted from a cnn-network, iteratively updating the centric points of the 
@@ -7,3 +9,5 @@ a) the episodic projection relationship between a mini-batch and global represen
 b) a query image's classification loss using nearest neighbour among all latest representations of classes.
 
 2. 
+
+# Other topics
