@@ -1,13 +1,15 @@
 # Few shot learning 
 (There is a survey in zhihu: https://zhuanlan.zhihu.com/p/61215293)
 
-1. Few-ShotLearningwithGlobalClassRepresentations  
+1. Few-Shot Learning with Global Class Representations  
 This paper provides a new trick that combines the base classes and novel classes in episode training, representing a class
 with its centric point of all in-class featrues extracted from a cnn-network, iteratively updating the centric points of the 
 subset of all classes by 
 a) the episodic projection relationship between a mini-batch and global representations.
 b) a query image's classification loss using nearest neighbour among all latest representations of classes.
 
-2. 
+2. S4L:Self-Supervised Semi-Supervised Learning
+This paper targets to un-supervised learning, but it is also a fine-grain related paper that is similar to JD-restruct-construct(CVPR2019)
+
 
 # Other topics
