@@ -13,3 +13,9 @@ This paper targets to un-supervised learning, but it is also a fine-grain relate
 
 
 # Other topics
+Tutorial of "Interpretable Machine Learning for Computer Vision"
+1. Understanding Models via Visualization and Attribution (Andrea Vedaldi)
+
+2. Understanding Latent Semantics in GANs (Bolei Zhou, http://bzhou.ie.cuhk.edu.hk/)
+
+4. Explaining Deep Learning for Identifying Structures and Biases in Computer Vision (http://www.heatmapping.org/  SUTD)
