@@ -13,9 +13,18 @@ This paper targets to un-supervised learning, but it is also a fine-grain relate
 
 
 # Other topics
-Tutorial of "Interpretable Machine Learning for Computer Vision"
+##Tutorial of "Interpretable Machine Learning for Computer Vision"
+All details refer to https://interpretablevision.github.io/
+
 1. Understanding Models via Visualization and Attribution (Andrea Vedaldi)
 
 2. Understanding Latent Semantics in GANs (Bolei Zhou, http://bzhou.ie.cuhk.edu.hk/)
 
 4. Explaining Deep Learning for Identifying Structures and Biases in Computer Vision (http://www.heatmapping.org/  SUTD)
+
+##Tutorial on "Accelerating Computer Vision with Mixed Precision"
+All details refer to https://nvlabs.github.io/iccv2019-mixed-precision-tutorial/
+
+## Tutorial on "Visual Recognition for Images, Video, and 3D" provided by FAIR 
+Usefull GanHuo regarding to "Detectron 2", "Mesh Reconstruction", "Recognition in Video"
+All details refer to https://alexander-kirillov.github.io/tutorials/visual-recognition-iccv19/
