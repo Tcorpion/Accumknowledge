@@ -34,3 +34,31 @@ jupyter notebook
 ```
 去浏览器打开,输入登录密码, 尽情享用
 
+#### How to set vnc4server
+ubuntu18.04 和 16.04 的配置不一样,
+ubuntu18.04选择使用xfce4作为远程桌面, 配置步骤:
+```
+# 安装 vnc4server，xfce4
+sudo apt install vnc4server xfce4 xfce4-goodies  
+
+# 启动+关闭VNC server, 默认创建了VNC xstartup配置文件
+vncserver :2
+vncserver -kill :2
+ 
+# 修改 ~/.vnc/xstartup 配置信息为如下(其他内容不保留):
+
+vim ~/.vnc/xstartup
+    #!/bin/sh 
+    # Uncomment the following two lines for normal desktop: 
+    unset SESSION_MANAGER 
+    unset DBUS_SESSION_BUS_ADDRESS 
+    startxfce4 & 
+
+# 开启vncserver
+vncserver :2 -geometry 1920x1080 -depth 24
+
+# 去ubuntu控制机器上, 配置remmina, 连接上面配置的这台远程被控机器. 
+```
+ubuntu18.04 [参考配置介绍](http://www.sohu.com/a/307156161_120123557) , 
+ubuntu16.04 [参考配置介绍](http://www.freetutorialssubmit.com/Ubuntu+Remote+Desktop+multiple+users) .
+
