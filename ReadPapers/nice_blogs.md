@@ -3,6 +3,11 @@ Useful technique
 #### How to transform a tensorflow model to tensorRT model
 https://devblogs.nvidia.com/tensorrt-integration-speeds-tensorflow-inference/
 
+#### How to use tensorRT
+https://docs.nvidia.com/deeplearning/sdk/tensorrt-install-guide/index.html
+https://docs.nvidia.com/deeplearning/sdk/tensorrt-developer-guide/index.html
+###### Migrating from TensorRT 4 to 5
+https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/python_api/gettingStarted.html
 #### How to run a tensorRT inference server
 https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/quickstart.html
 
@@ -61,4 +66,22 @@ vncserver :2 -geometry 1920x1080 -depth 24
 ```
 ubuntu18.04 [参考配置介绍](http://www.sohu.com/a/307156161_120123557) , 
 ubuntu16.04 [参考配置介绍](http://www.freetutorialssubmit.com/Ubuntu+Remote+Desktop+multiple+users) .
+
+### How to enable port 22
+Make sure a port like 22 in ubuntu is disable
+```buildoutcfg
+# nothing output means the port is disable
+sudo netstat -ntlp|grep 22
+
+# run following
+sudo apt-get install openssh-server
+sudo apt-get install ufw
+sudo ufw enable
+sudo ufw allow 22
+
+# make sure this port is working, the above line outputs the bellow
+sudo netstat -ntlp|grep 22
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      10540/sshd          
+tcp6       0      0 :::22                   :::*                    LISTEN      10540/sshd
+```
 
