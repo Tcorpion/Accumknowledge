@@ -67,7 +67,7 @@ vncserver :2 -geometry 1920x1080 -depth 24
 ubuntu18.04 [参考配置介绍](http://www.sohu.com/a/307156161_120123557) , 
 ubuntu16.04 [参考配置介绍](http://www.freetutorialssubmit.com/Ubuntu+Remote+Desktop+multiple+users) .
 
-### How to enable port 22
+#### How to enable port 22
 Make sure a port like 22 in ubuntu is disable
 ```buildoutcfg
 # nothing output means the port is disable
