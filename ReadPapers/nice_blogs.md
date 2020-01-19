@@ -1,5 +1,8 @@
 Useful technique
 
+#### Where to learn Nginx
+https://tengine.taobao.org/book/index.html
+
 #### How to transform a tensorflow model to tensorRT model
 https://devblogs.nvidia.com/tensorrt-integration-speeds-tensorflow-inference/
 
