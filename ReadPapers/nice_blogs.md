@@ -88,3 +88,5 @@ tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      
 tcp6       0      0 :::22                   :::*                    LISTEN      10540/sshd
 ```
 
+#### Install donet core
+Refer to the [docs](https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-package-manager-ubuntu-1804)
