@@ -136,10 +136,10 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
     ```
 
 * 在/etc/目录下面创建`rc.local`文件，赋予执行权限，
-```shell script
-touch /etc/rc.local
-chmod +x /etc/rc.local
-```
+    ```shell script
+    touch /etc/rc.local
+    chmod +x /etc/rc.local
+    ```
 
 * `/etc/rc.local` 文件添加开机自动启动命令， 命令写在`exit 0`之前， 如下内容：
     ```shell script
