@@ -160,3 +160,6 @@ chmod +x /etc/rc.local
     
     exit 0
     ```
+
+#### Install donet core
+Refer to the [docs](https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-package-manager-ubuntu-1804)
