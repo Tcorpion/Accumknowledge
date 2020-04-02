@@ -61,6 +61,9 @@ vim ~/.vnc/xstartup
     unset SESSION_MANAGER 
     unset DBUS_SESSION_BUS_ADDRESS 
     startxfce4 & 
+    
+# 设置vncserver密码
+vncpasswd
 
 # 开启vncserver
 vncserver :2 -geometry 1920x1080 -depth 24
@@ -69,6 +72,24 @@ vncserver :2 -geometry 1920x1080 -depth 24
 ```
 ubuntu18.04 [参考配置介绍](http://www.sohu.com/a/307156161_120123557) , 
 ubuntu16.04 [参考配置介绍](http://www.freetutorialssubmit.com/Ubuntu+Remote+Desktop+multiple+users) .
+
+错误解决：报错Failed to connect to socket /tmp/dbus-xxxxxxx: Connection refused
+```
+vim ~/.vnc/xstartup
+    #!/bin/sh 
+    # Uncomment the following two lines for normal desktop: 
+    unset SESSION_MANAGER 
+    unset DBUS_SESSION_BUS_ADDRESS 
+    dbus-launch /usr/bin/startxfce4 &
+```
+重启vncserver
+`
+vncserver :2 -geometry 1920x1080 -depth 24
+`
+如果端口权限有问题， 尝试：
+`
+sudo ufw allow from any to any port 2 proto tcp
+`
 
 #### How to enable port 22
 Make sure a port like 22 in ubuntu is disable
