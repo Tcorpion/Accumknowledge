@@ -184,3 +184,5 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 
 #### Install donet core
 Refer to the [docs](https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-package-manager-ubuntu-1804)
+
+#### 如何[确定高斯滤波的标准差和窗口大小](https://www.cnblogs.com/shine-lee/p/9671253.html)
