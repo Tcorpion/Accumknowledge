@@ -186,3 +186,9 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 Refer to the [docs](https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-package-manager-ubuntu-1804)
 
 #### 如何[确定高斯滤波的标准差和窗口大小](https://www.cnblogs.com/shine-lee/p/9671253.html)
+
+#### 断电后本地ubuntu18.04机器无法接入外网的解决办法
+    ```
+    sudo vim /etc/resolv.conf #找一些公开dns 地址加进来，比如114.114.114.119，114.114.115.119， 注释掉现有的地址
+    systemctl restart networking #重启网络
+    ```
