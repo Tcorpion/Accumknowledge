@@ -189,6 +189,7 @@ Refer to the [docs](https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-p
 
 #### 断电后本地ubuntu18.04机器无法接入外网的解决办法
     ```
-    sudo vim /etc/resolv.conf #找一些公开dns 地址加进来，比如114.114.114.119，114.114.115.119， 注释掉现有的地址
+    #sudo vim /etc/resolv.conf #找一些公开dns 地址加进来，比如114.114.114.119，114.114.115.119， 注释掉现有的地址
     systemctl restart networking #重启网络
+    sudo vim /etc/systemd/resolved.conf # 改这里的dns才能有效
     ```
