@@ -196,3 +196,6 @@ Refer to the [docs](https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-p
 #### TF 1.14 CUDA_ERROR_OUT_OF_MEMORY
 When I trained a maskrcnn in a gpu mechine (1080ti, TaiTanXP), there was a error coming out frequently "Attempting to fetch value instead of handling error Internal: failed initializing StreamExecutor for CUDA device ordinal 0: Internal: failed call to cuDevicePrimaryCtxRetain: CUDA_ERROR_OUT_OF_MEMORY: out of memory; ... "
 To fix the above error, I add `export CUDA_VISIBLE_DEVICES=1` before training with tf 1.14 by referring https://stackoverflow.com/questions/51430062/unable-to-create-tensorflow-session-internal-failed-initializing-streamexecut
+
+#### FinalShell tool
+This is a nice tool, referring to [here](https://www.jianshu.com/p/14c3b78ca570)
