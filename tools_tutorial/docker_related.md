@@ -36,4 +36,15 @@
 
     ```
   *Note:  Nvidia drivers must be installed on the host machine and be aware of NVIDIA Driver Version.
+
+## Run docker image without entrance
+
+For docker image `gcr.io/xxxxxx/yyy:zzz`, run it in sleeping mode
+```
+sudo docker run -idt \
+    --shm-size="1g" \
+    --ulimit core=-1 \
+    --security-opt seccomp=unconfined \
+    gcr.io/xxxxxx/yyy:zzz sleep infinity
+ ```
  
