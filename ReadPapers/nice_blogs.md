@@ -199,3 +199,38 @@ To fix the above error, I add `export CUDA_VISIBLE_DEVICES=1` before training wi
 
 #### FinalShell tool
 This is a nice tool, referring to [here](https://www.jianshu.com/p/14c3b78ca570)
+
+#### Trojan tutorial 
+
+All tutorial details come from [here](https://tlanyan.me/trojan-tutorial/) , the following were copied.
+
+pp.ua官方网站是 https://pp.ua/，页面都是俄文。幸运的是申请、激活域名和后台页面都有英文界面，有英语基础的无需借助翻译软件也可正常操作。
+
+##### pp.ua申请教程, 
+
+下面介绍个人二级免费域名pp.ua申请教程
+
+    * 免费二级域名pp.ua申请, 参考[教程](https://tlanyan.me/personal-free-pp-ua-domain-tutorial/). 简要流程:
+      * 打开 https://nic.ua/en/domains/.pp.ua，搜索框中输入要申请的二级域名，例如tlanyan，然后点击“Search”按钮查看是否已被注册；
+      * 没被占用的域名会出现绿色的勾和“Add to cart”的按钮，点击“Add to cart”将域名加入购物车； 
+      * 接着点击“Checkout”去付款。由于是免费的，实际上无需付款和添加支付方式;
+      * 国家选”China”，手机号填写自己的手机号，其他信息使用大写拼音填写即可，例如Last name(名)填QUANQUAN，First name(姓)填ZHANG，Middle name不需要填，Region(省)、City(城市)、Address(详细地址)也一样用大写拼音填写就可以，ZIP是邮政编码。填好后点击“Save contact”保存；
+      * 接下来是确认域名持有人信息，默认是刚才保存的信息，点击“Continue checkout”，订单就完成了；
+      * 网站会发两封邮件(一封账号确认邮件，另一封订单确认邮件)，内容都是俄文，不用管，点击里面的链接打开就行了;
+
+到此域名注册已经完成，点击右上角邮箱下拉菜单中的“dashboard”进入管理后台，点击左侧的“domains”就可以看到刚才注册的域名。
+免费域名需要激活才使用，接下来介绍激活教程.
+
+##### pp.ua激活教程
+
+管理后台查看域名，刚注册的域名前面有个蓝圈圈，鼠标放上去会有“processing a job. please wait xxxx”的提示。这表示域名尚未激活，因此什么操作都做不了。
+正确的做法是等待，一般一天之内会发送激活码到你的手机上(国外的手机号会快一些)，短信以“MRG”开头：
+收到短信后，打开 https://apu.drs.ua/en/，依次输入域名、手机号(要加国家代码，例如+86)、短信里给的激活码(8位数字)，点击“Continue”完成激活.
+再回到管理后台，域名前面的蓝圈圈变成了绿色的点，鼠标移上去出现“active”的提示。
+
+##### 设置DNS解析
+
+激活域名后，在后台点域名后面的设置按钮，页面往下拉，找到“NS-servers”，选择“NIC.UA nameservers”.
+接着点左侧菜单的“Name Servers”，点域名后面的设置按钮，在下方的DNS-recoords中设置DNS解析.
+新注册域名有效期都是一年，不能立即续费，可在到期前4个月申请续费，最长可续费10年.
+每个账号、手机号一个月内只能激活三个免费域名.
