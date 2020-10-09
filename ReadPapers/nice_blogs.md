@@ -234,3 +234,20 @@ pp.ua官方网站是 https://pp.ua/，页面都是俄文。幸运的是申请、
 接着点左侧菜单的“Name Servers”，点域名后面的设置按钮，在下方的DNS-recoords中设置DNS解析.
 新注册域名有效期都是一年，不能立即续费，可在到期前4个月申请续费，最长可续费10年.
 每个账号、手机号一个月内只能激活三个免费域名.
+
+##### 部署v2ray/trogan
+
+1. 申请域名 lyzhaishang.pp.ua, vm带public ip, dns解析域名domain到vm的public ip.
+2. 参考以下 申请SSL证书
+   ubuntu18.04 安装 nginx: [在Ubuntu 18.04/19.04系统上安装Nginx最新版本的方法](https://ywnz.com/linuxyffq/5148.html)
+   ubuntu18.04 使用Certbot：[在Linux上安装letsencrypt的最简单方法](https://ywnz.com/linuxyffq/4483.html)
+
+    ```bash
+    sudo snap install core; sudo snap refresh core
+    sudo apt-get remove certbot
+    sudo snap install --classic certbot
+    sudo ln -s /snap/bin/certbot /usr/bin/certbot
+    sudo certbot certonly --nginx -d lyzhaishang.pp.ua -d www.lyzhaishang.pp.ua
+    ```
+3. 部署服务端[v2ray](https://tlanyan.me/v2ray-tutorial/), 部署nginx做[流量伪装](https://tlanyan.me/v2ray-traffic-mask/). 
+   目前已在win10上的client验证成功, ubuntu上的client没有验证成.
