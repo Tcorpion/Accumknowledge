@@ -251,3 +251,82 @@ pp.ua官方网站是 https://pp.ua/，页面都是俄文。幸运的是申请、
     ```
 3. 部署服务端[v2ray](https://tlanyan.me/v2ray-tutorial/), 部署nginx做[流量伪装](https://tlanyan.me/v2ray-traffic-mask/). 
    目前已在win10上的client验证成功, ubuntu上的client没有验证成.
+
+#### ssh科学上网
+
+使用ssh代理，需要你有一台外部的vps，最好是国外的，能够访问各种所需服务。假设你可ssh连接到vps，如下步骤可建成一个代理服务器：
+
+    ssh -D127.0.0.1:8080 user@host
+
+    使用-D参数绑定监听。上述命令中我们监听的端口是8080.如果你知道-N和-T参数的含义，上述命令可以改为： ssh -NT -D *:8080，这里我们监听所有的来源而不限于本机（127.0.0.1）。通过这样做，可以对外提供服务。
+
+    配置浏览器的代理。我使用的是switchysharp这个插件，在配置里找到socks代理，主机填写127.0.0.1，端口填写刚才使用的8080端口，协议版本选择socks v5.0。
+
+    保存配置，并且启用该配置，就可以看到能够顺利访问外部站点资源了。
+
+ssh代理的原理如下： 用户的请求直接走ssh的通道向远程服务器发起请求。由于ssh是加密连接，内容不能被外部监听，所以只要能连到服务器就有效。而squid之类的代理，首先还是要通过http方式请求服务器，中间路由一看到请求的地址，然后就干掉了。
+
+此代理的限制： 在使用过程中应当保持ssh会话一直连接。由于请求是通过ssh通道传递，所以要保证ssh会话有效。使ssh处于不断线状态可在服务器上做如下配置：vim /etc/ssh/sshd_config，将下面配置启用：
+
+    ClientAliveInterval 60
+    ClientAliveCountMax 3    
+
+然后重启sshd服务： service sshd restart.
+下次再次连接进来，即可发现会话会一直保持，就可以愉快的上网了。
+
+#### shadowsocks科学上网
+
+部署[ss服务端](https://tlanyan.me/using-shadowsocks-to-fuck-the-gfw/)
+```bash
+# 1 按装工具shadowsocks
+sudo apt-get install shadowsocks
+
+# 2 配置端口, 开启vm的对外端口, 比如8080, 然后完成配置文件
+sudo vim ~/shadowsocks.json
+```
+~/shadowsocks.json内容如下, 参考[指导](https://tlanyan.me/on-fuck-gfw-again/)
+
+    {
+         "server":"0.0.0.0",
+         "local_address": "127.0.0.1",
+         "local_port":1080,
+         "port_password": {
+             "8080": "123.0000"
+         },
+         "timeout":300,
+         "method":"aes-256-cfb",
+         "fast_open": false
+    }
+
+```bash
+# 3 开启服务
+sudo ssserver -c /home/`whoami`/shadowsocks.json --log-file /var/log/shadowsocks -d start
+```
+
+部署[ss本地客户端](https://yq.aliyun.com/articles/503030)
+```bash
+# 1 同样地, 安装shadowsocks
+sudo apt-get install shadowsocks
+
+# 2 完成对应的本地配置文件
+sudo vim ~/local_shadowsocks.json
+```
+~/local_shadowsocks.json内容如下,
+
+    {
+     "server":"20.46.179.229", # 指向服务端vm的public ip
+     "server_port":8080,
+     "local_port":1080,
+     "password":"123.0000",
+     "timeout":300,
+     "method":"aes-256-cfb"
+    }
+
+```bash
+# 3 运行本地sslocal
+nohup /usr/bin/sslocal -c ~/local_shadowsocks.json & 即可在后台运行
+# 或者直接运行
+sslocal -c ~/local_shadowsocks.json
+```
+最后在chrome浏览器使用Switchysharp插件配置socks代理, SOCKS Host 为 127.0.0.1, port为1080.
+除了部署服务端，强烈建议安装bbr模块加快网速
