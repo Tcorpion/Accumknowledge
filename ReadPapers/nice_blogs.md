@@ -94,8 +94,10 @@ sudo ufw allow from any to any port 2 proto tcp
 #### How to enable port 22
 Make sure a port like 22 in ubuntu is disable
 ```buildoutcfg
-# nothing output means the port is disable
+# nothing output means the port is disable or 
+# openssh-server is not installed. 
 sudo netstat -ntlp|grep 22
+sudo apt-get install openssh-server
 
 # run following
 sudo apt-get install openssh-server
