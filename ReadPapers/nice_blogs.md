@@ -42,54 +42,10 @@ jupyter notebook
 ```
 去浏览器打开,输入登录密码, 尽情享用
 
-#### How to set vnc4server
-ubuntu18.04 和 16.04 的配置不一样,
-ubuntu18.04选择使用xfce4作为远程桌面, 配置步骤:
-```
-# 安装 vnc4server，xfce4
-sudo apt install vnc4server xfce4 xfce4-goodies  
+#### How to set vncserver
 
-# 启动+关闭VNC server, 默认创建了VNC xstartup配置文件
-vncserver :2
-vncserver -kill :2
- 
-# 修改 ~/.vnc/xstartup 配置信息为如下(其他内容不保留):
+ubuntu18.04选择使用xfce4作为远程桌面, 参考[这里](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-18-04)或者腾讯的[配置步骤](https://cloud.tencent.com/developer/article/1350304):
 
-vim ~/.vnc/xstartup
-    #!/bin/sh 
-    # Uncomment the following two lines for normal desktop: 
-    unset SESSION_MANAGER 
-    unset DBUS_SESSION_BUS_ADDRESS 
-    startxfce4 & 
-    
-# 设置vncserver密码
-vncpasswd
-
-# 开启vncserver
-vncserver :2 -geometry 1920x1080 -depth 24
-
-# 去ubuntu控制机器上, 配置remmina, 连接上面配置的这台远程被控机器. 
-```
-ubuntu18.04 [参考配置介绍](http://www.sohu.com/a/307156161_120123557) , 
-ubuntu16.04 [参考配置介绍](http://www.freetutorialssubmit.com/Ubuntu+Remote+Desktop+multiple+users) .
-
-错误解决：报错Failed to connect to socket /tmp/dbus-xxxxxxx: Connection refused
-```
-vim ~/.vnc/xstartup
-    #!/bin/sh 
-    # Uncomment the following two lines for normal desktop: 
-    unset SESSION_MANAGER 
-    unset DBUS_SESSION_BUS_ADDRESS 
-    dbus-launch /usr/bin/startxfce4 &
-```
-重启vncserver
-`
-vncserver :2 -geometry 1920x1080 -depth 24
-`
-如果端口权限有问题， 尝试：
-`
-sudo ufw allow from any to any port 2 proto tcp
-`
 
 #### How to enable port 22
 Make sure a port like 22 in ubuntu is disable
@@ -332,3 +288,186 @@ sslocal -c ~/local_shadowsocks.json
 ```
 最后在chrome浏览器使用Switchysharp插件配置socks代理, SOCKS Host 为 127.0.0.1, port为1080.
 除了部署服务端，强烈建议安装bbr模块加快网速
+
+
+#### ubuntu挂载新的硬盘
+
+请参考[腾讯云挂载硬盘](https://cloud.tencent.com/developer/article/1406638?from=information.detail.%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%80%E9%94%AE%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98)
+
+ * step 1 查看信息
+ 
+    显示硬盘及所属分区情况。在终端窗口中输入如下命令：
+    ```
+    sudo fdisk -l
+    ```
+    比如, 显示为挂载盘`/dev/vdb`信息
+    ```
+    ubuntu@VM-0-3-ubuntu:~$ sudo fdisk -l 
+    Disk /dev/vda: 100 GiB, 107374182400 bytes, 209715200 sectors
+    Units: sectors of 1 * 512 = 512 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    Disklabel type: dos
+    Disk identifier: 0x3fa1d255
+    
+    Device     Boot Start       End   Sectors  Size Id Type
+    /dev/vda1  *     2048 209715166 209713119  100G 83 Linux
+    
+    
+    Disk /dev/vdb: 2 TiB, 2147483648000 bytes, 4194304000 sectors
+    Units: sectors of 1 * 512 = 512 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    
+    ```
+
+ * step 2 硬盘分区
+
+    硬盘分区，在终端窗口中输入如下命令：
+    ```
+    sudo fdisk /dev/vdb
+    ```
+    
+    如图输入m显示一个帮助菜单,
+    在Command (m for help)提示符后面输入n，执行 add a new partition 指令给硬盘增加一个新分区。
+    
+    出现Command action时，输入e，指定分区为扩展分区（extended）。
+    
+    出现Partition number(1-4)时，输入１表示只分一个区。
+    
+    后续指定起启柱面（cylinder）号完成分区。
+    
+    在Command (m for help)提示符后面输入p，显示分区表。
+    
+    系统提示如下：
+    ``` 
+    Device     Boot Start        End    Sectors Size Id Type
+    /dev/vdb1        2048 4194303999 4194301952   2T  5 Extended
+    ```
+    
+    在Command (m for help)提示符后面输入w，保存分区表。
+    
+    系统提示：The partition table has been altered!
+
+    **这一步依次操作和相应显示如下**
+
+    ```
+    Welcome to fdisk (util-linux 2.31.1).
+    Changes will remain in memory only, until you decide to write them.
+    Be careful before using the write command.
+    
+    Device does not contain a recognized partition table.
+    Created a new DOS disklabel with disk identifier 0x563a1edc.
+    
+    Command (m for help): m
+    
+    Help:
+    
+      DOS (MBR)
+       a   toggle a bootable flag
+       b   edit nested BSD disklabel
+       c   toggle the dos compatibility flag
+    
+      Generic
+       d   delete a partition
+       F   list free unpartitioned space
+       l   list known partition types
+       n   add a new partition
+       p   print the partition table
+       t   change a partition type
+       v   verify the partition table
+       i   print information about a partition
+    
+      Misc
+       m   print this menu
+       u   change display/entry units
+       x   extra functionality (experts only)
+    
+      Script
+       I   load disk layout from sfdisk script file
+       O   dump disk layout to sfdisk script file
+    
+      Save & Exit
+       w   write table to disk and exit
+       q   quit without saving changes
+    
+      Create a new label
+       g   create a new empty GPT partition table
+       G   create a new empty SGI (IRIX) partition table
+       o   create a new empty DOS partition table
+       s   create a new empty Sun partition table
+    
+    
+    Command (m for help): n
+    Partition type
+       p   primary (0 primary, 0 extended, 4 free)
+       e   extended (container for logical partitions)
+    Select (default p): e
+    Partition number (1-4, default 1): 1
+    First sector (2048-4194303999, default 2048): 
+    Last sector, +sectors or +size{K,M,G,T,P} (2048-4194303999, default 4194303999): 
+    
+    Created a new partition 1 of type 'Extended' and of size 2 TiB.
+    
+    Command (m for help): p
+    Disk /dev/vdb: 2 TiB, 2147483648000 bytes, 4194304000 sectors
+    Units: sectors of 1 * 512 = 512 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    Disklabel type: dos
+    Disk identifier: 0x563a1edc
+    
+    Device     Boot Start        End    Sectors Size Id Type
+    /dev/vdb1        2048 4194303999 4194301952   2T  5 Extended
+    
+    Command (m for help): w
+    The partition table has been altered.
+    Calling ioctl() to re-read partition table.
+    Syncing disks.
+    ```
+
+ * step 3 硬盘格式化(说明： ext4 表示将分区格式化成ext4文件系统类型。)
+ 
+    命令为 `sudo mkfs -t ext4 /dev/vdb`
+
+    ```
+    ubuntu@VM-0-3-ubuntu:~$ sudo mkfs -t ext4 /dev/vdb
+    mke2fs 1.44.1 (24-Mar-2018)
+    Found a dos partition table in /dev/vdb
+    Proceed anyway? (y,N) y
+    Creating filesystem with 524288000 4k blocks and 131072000 inodes
+    Filesystem UUID: 6c57cd37-e570-4fa5-a3e4-51a9e3d114bd
+    Superblock backups stored on blocks: 
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+        4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968, 
+        102400000, 214990848, 512000000
+    
+    Allocating group tables: done                            
+    Writing inode tables: done                            
+    Creating journal (262144 blocks): done
+    Writing superblocks and filesystem accounting information: done 
+    ```
+ 
+ * step 4 挂载使用
+ 
+    先查看挂载前的硬盘情况:`df -lh`
+    
+    然后直接挂载
+    ``` 
+    sudo mkdir /datadrive                   # 创建挂载点
+    sudo mount /dev/vdb /datadrive          # 手动挂载
+    ```
+    查看挂载后的硬盘情况:`df -lh`
+    ``` 
+    ubuntu@VM-0-3-ubuntu:~$ df -lh
+    Filesystem      Size  Used Avail Use% Mounted on
+    udev            7.8G     0  7.8G   0% /dev
+    tmpfs           1.6G  6.1M  1.6G   1% /run
+    /dev/vda1        99G  2.5G   92G   3% /
+    tmpfs           7.8G   24K  7.8G   1% /dev/shm
+    tmpfs           5.0M     0  5.0M   0% /run/lock
+    tmpfs           7.8G     0  7.8G   0% /sys/fs/cgroup
+    tmpfs           1.6G  4.0K  1.6G   1% /run/user/500
+    /dev/vdb        2.0T   81M  1.9T   1% /datadrive
+    ```
+    
