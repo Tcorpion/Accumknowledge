@@ -11,5 +11,6 @@
     * Given location (c, x, y) of feature map F, enlarge the higher value and reduce lower value among different feature
     maps at location (x, y).
  4. Batch normalization. For each batch calculation, get the **mean value** and **variance**, record them, then get 
-    x_n = (x-u) / deta as normalization value for purposes like accelerating convergence and avoiding overfitting, then 
-    linearly move x_n to (x_n * t + b), here t and b are model parameters of bn layer.
+    x_n = (x-u) / deta as normalization value for purposes like accelerating convergence, [avoiding zero gradient, 
+    infinite gradient](https://zhuanlan.zhihu.com/p/180568816), and avoiding overfitting, then linearly move x_n to 
+    (x_n * t + b), here t and b are model parameters of bn layer.
