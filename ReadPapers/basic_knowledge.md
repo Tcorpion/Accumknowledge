@@ -14,3 +14,7 @@
     x_n = (x-u) / deta as normalization value for purposes like accelerating convergence, [avoiding zero gradient, 
     infinite gradient](https://zhuanlan.zhihu.com/p/180568816), and avoiding overfitting, then linearly move x_n to 
     (x_n * t + b), here t and b are model parameters of bn layer.
+
+### Detection
+1. Yolo v3, 网络结构+loss解析，参考[代码](https://github.com/DeNA/PyTorch_YOLOv3) 和博客[讲解](https://blog.csdn.net/wqwqqwqw1231/article/details/90667046).
+2. 
