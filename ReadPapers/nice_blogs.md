@@ -12,7 +12,8 @@ https://docs.nvidia.com/deeplearning/sdk/tensorrt-developer-guide/index.html
 ###### Migrating from TensorRT 4 to 5
 https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/python_api/gettingStarted.html
 #### How to run a tensorRT inference server
-https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/quickstart.html
+* Old version docs link: https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/quickstart.html
+* Latest link: https://github.com/triton-inference-server/server
 
 #### How to set jupyter
 Step 1 install the jupyter
