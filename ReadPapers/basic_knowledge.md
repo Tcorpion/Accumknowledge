@@ -16,5 +16,10 @@
     (x_n * t + b), here t and b are model parameters of bn layer.
 
 ### Detection
-1. Yolo v3, 网络结构+loss解析，参考[代码](https://github.com/DeNA/PyTorch_YOLOv3) 和博客[讲解](https://blog.csdn.net/wqwqqwqw1231/article/details/90667046).
-2. 
+1. Yolo v3, 网络结构+loss解析，参考[代码](https://github.com/DeNA/PyTorch_YOLOv3) 和博客[讲解](https://blog.csdn.net/wqwqqwqw1231/article/details/90667046)
+   以及[知乎文](https://zhuanlan.zhihu.com/p/143747206).
+2. [Comparision between Yolo v5 and v4](https://zhuanlan.zhihu.com/p/161083602), [details about v4](https://zhuanlan.zhihu.com/p/136172670) 
+3. [Box regression loss revisiting](https://zhuanlan.zhihu.com/p/104236411): Ln (l2, l1) loss -> Smooth l1 loss -> IOU loss
+   IoU Loss -> GIoU Loss -> DIoU Loss -> CIoU Loss
+4. PANet refers to [here](https://zhuanlan.zhihu.com/p/63548148)
+
