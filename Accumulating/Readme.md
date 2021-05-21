@@ -1,4 +1,5 @@
 Here are some repeated experiments and recordings related to:
+```
 0. ***** Daily leetcode (in python/c++)
 
 1. **** (Review) Metric Learning + Loss Functions + Self-Supervised Learning.
@@ -49,4 +50,4 @@ Here are some repeated experiments and recordings related to:
 15. *** Daily Reading on Maths books
 
 (The number of `*` represents priority.)
-
+```
