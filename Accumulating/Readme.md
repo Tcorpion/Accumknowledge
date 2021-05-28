@@ -8,6 +8,7 @@ Here are some repeated experiments and recordings related to:
 2. **** (Review) Segmentation + Fine-Grained Recognition
    2.1 Semantic Segmentation
    2.2 Instance Segmentation
+       tricks: FPN + IOU Loss 
    2.3 Panoptic Segmentation
 
 3. **** (Review) Detection + Fine-Grained Recognition
@@ -23,6 +24,7 @@ Here are some repeated experiments and recordings related to:
 5. *** Face recognition + Land Mark + metric learning
 
 6. *** Transformer
+    [reference 1](https://zhuanlan.zhihu.com/p/43493999, https://zhuanlan.zhihu.com/p/44121378)
 
 7. *** RL Introduction
 
@@ -51,3 +53,7 @@ Here are some repeated experiments and recordings related to:
 
 (The number of `*` represents priority.)
 ```
+
+The above experiments will **take less than 50% time** compared to repeating on mmdetection/mmsegmentation, since **in 
+mmdetection/mmsegmentation more methods and parameters** will be used.
+
