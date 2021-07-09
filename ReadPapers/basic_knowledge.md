@@ -41,12 +41,20 @@ Recall = TP / (TP + FN)。FPS比较直观， frame per second.
 检测模型通常输出的detections能达到数量级30k ~ 100k， 这些detections的scores分布多样化，这些输出依赖于模型参数设置和检测数据，比如候选anchors数量、
 feature map的大小， (FPN)feature level层数、待检测图像中目标密集程度、检测inference中截断score阈值、检测inference中输出截断个数。在使用
 模型时，前面提到的这些因素是可以进行超参数设置，同样的模型经过训练后在inference阶段使用不同超参数可以得到不同的precision和recall(各位调参虾的表演不尽相同)。
-为了全面对比模型好坏，学界提出F1, AP50, AP75, mAP[50-95], AR50. AR75, mAR[50-95]，详细可以参考
+为了全面对比模型好坏，学界提出F1, AP50, AP75, mAP[50-95], AR50. AR75, mAR[50-95]，详细可以
+[参考](https://blog.zenggyu.com/en/post/2018-12-16/an-introduction-to-evaluation-metrics-for-object-detection/), 以及
 [这些知乎软文](https://zhuanlan.zhihu.com/p/107989173?from_voters_page=true), 还有
 [github Metrics 介绍](https://github.com/rafaelpadilla/Object-Detection-Metrics)
 
 需要说明的是，论文通常宣称达到SOTA mAP, SOTA AP50 或者 AP75，在比较和使用时，需要观察前面提及的那些超参数论文设置的多少，**每个模型在不同超参数
-下可以得到有高有低的mAP, AP50和AP75，把这些考虑进来非常重要。**
+下可以得到有高有低的mAP, AP50和AP75，把这些考虑进来非常重要。** 
+比如检测的**截断阈值**，有些模型在通用阈值0.05附近甚至更低值仍然有较高的precision, 这时候的如果recall离1.0较远(比如recall才0.94，
+而precision高达0.98)，那么0.05阈值就不适合截断了需要继续调低，调低过程中recall继续上涨直到precision出现显著下降趋势(比如precision快速降到0.7).
+P-R曲线右下角这块区域通常是实际使用模型最关注的区域，AP计算的是recall从区间（0，1）增长过程【precision的右侧极值】的均值， 通常模型在recall 
+从0到0.8（或者更小 0到0.6）增长过程中precision的下降不大很平缓，我们部署的模型至少得有0.9以上recall才好意思拿出来用，这里recall=0.9是一个
+实际能接受的下限，也可是recall=0.8, 在可接受[recall_min, 1.0)区间的precision均值才是最最最最关心的，评估下来变化也是最显著的，不然你告诉我
+两个模型AP50一个0.975另一个也是0.971， 可能他们两个只是计算量化误差导致差异，真正使用过程后者AP50=0.971在[recall_min, 1.0)区间的AP50比前者
+显著高30%，显而易见选后者能得到更高的性能或者叫F1值。
 
 1. Yolo v3, 网络结构+loss解析，参考[代码](https://github.com/DeNA/PyTorch_YOLOv3) 和博客[讲解](https://blog.csdn.net/wqwqqwqw1231/article/details/90667046)
    以及[知乎文](https://zhuanlan.zhihu.com/p/143747206).
