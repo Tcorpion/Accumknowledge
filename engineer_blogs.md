@@ -502,6 +502,7 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
     ```
   
 #### Install Matlab2015b on Ubuntu20.04
+详细参考别人的[blog](https://blog.csdn.net/weixin_43994864/article/details/111028604)
 ```
 1. Download Package Directory: 链接: https://pan.baidu.com/s/1Xr1TFSrqDZAbhvyEff28rQ 密码: ojj0
 2. Check file list in the Directory: 
@@ -551,6 +552,7 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
             sudo  cp libinstutil.so      /usr/local/MATLAB/R2014A/bin/glnxa64/
             sudo  cp libmwservices.so    /usr/local/MATLAB/R2014A/bin/glnxa64/
    5.5 OK!  cd /usr/local/MATLAB/R2015b/bin进入该路径, sudo ./matlab
-   5.6 自己搞一个桌面快捷，
+   5.6 卸载iso镜像光盘: sudo umount /media/matlab
+   5.7 自己搞一个桌面快捷，
        或者 sudo ln -s /usr/local/Matlab/bin/matlab(你的安装位置)  /usr/bin/， 然后直接命令行快速启动
 ```
