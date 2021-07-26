@@ -556,3 +556,28 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
    5.7 自己搞一个桌面快捷，
        或者 sudo ln -s /usr/local/Matlab/bin/matlab(你的安装位置)  /usr/bin/， 然后直接命令行快速启动
 ```
+
+#### Increate Batchsize in Pytorch
+Gradients update one time after running multiple inferences as a batch, like:
+```
+# 1. 正常情况下是: 1次forward, 1次gradient更新
+optimizer.zerograd()
+for x, y in dotaloader:
+    y = model(x)
+    loss_mse = torch.MSE(x, y)
+    loss_mse.backward()
+    optimizer.step()
+    optimizer.zerograd()
+
+# 2. 要让batchsize强行变大时: 多次forward, 1次gradient更新
+batchsize_mult = 10 
+optimizer.zerograd()
+for i_ite, (x, y) in enumerate(dotaloader):
+    y = model(x)
+    loss_mse = torch.MSE(x, y)
+    loss_mse.backward()
+    # 让 batchsize 强行变大 10 倍
+    if (i_ite + 1) % batchsize_mult == 0:
+        optimizer.step()
+        optimizer.zerograd()
+```  
