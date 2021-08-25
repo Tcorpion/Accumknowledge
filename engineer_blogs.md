@@ -500,7 +500,61 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
     To git@ubuntu:/srv/sample.git
      * [new branch]      master -> master
     ```
-  
+
+#### Install Matlab2015b on Ubuntu20.04
+```
+1. Download Package Directory: 链接: https://pan.baidu.com/s/1Xr1TFSrqDZAbhvyEff28rQ 密码: ojj0
+2. Check file list in the Directory: 
+        R2015b_glnxa64.iso
+        Matlab 2015b Linux64 Crack.rar (extract here, and get 'Matlab 2015b Linux64 Crack')
+        Linux公社500x500.png (not used)             
+        Linux公社PDF.pdf     (not used)             
+        ShortCut_Linux.zip  (not used) 
+        教程重要说明及更新链接点击这个文本2017.txt (not used)
+3. mount MATLAB iso file:
+        sudo mkdir /media/matlab
+        sudo mount -o loop R2015b_glnxa64.iso /media/matlab
+   执行完上述命令以后，在终端会输出
+   mount: /media/matlab is write-protected, mounting read-only
+  （这表示MATLAB镜像文件已经挂载成功，你可以在Ubuntu20.04系统收藏夹可以看到，就相当于一个光盘）
+4. 从挂载盘`MATHWORKS_R2015B`进入，在上述光盘中右击鼠标，创建terminal，如下
+   4.1 username@Mechine:/media/matlab$ ls
+        activate.ini  help                 java                   sys
+        archives      install              license_agreement.txt  trademarks.txt
+        bin           installer_input.txt  patents.txt            version.txt
+        etc           install_guide.pdf    readme.txt
+   进入这个光盘路径（切记！切记！一定要在光盘内右击鼠标进入其路径，在终端直接cd /media/matlab是不行的)
+   4.2 username@Mechine:/media/matlab$ sudo ./install
+      4.2.1 开始安装，切记刚开始选择使用密钥安装 不需要internet连接，
+      4.2.2 点击下一步同意协议，
+      4.2.3 之后继续输入密钥：09806-07443-53955-64350-21751-41297，之后一直点击“下一步”即可，最后点击“完成”！！
+   默认安装到‘/usr/local/MATLAB/R2015b/’， 安装项目默认全部安装，大小有10G+（内存不足的可以根据自己需求选择）
+5. 激活MATLAB(在断网情况下完成， 除非用到 apt-get install, 用完继续断网破解直到完成)
+   5.1 解压’Matlab 2015b Linux64 Crack.rar’
+   5.2 username@Mechine:/usr/local/MATLAB/R2015b/bin$ sudo ./matlab
+       安装目录 ‘/usr/local/MATLAB/R2015b/bin’ 下打开终端，sudo ./matlab，选择在不使用联网状态下激活 
+   5.3 加载Crack下解压目录'Matlab 2015b Linux64 Crack'中的激活文件`license_standalone.lic`当许可文件，
+       给完整路径即可。
+   5.4 然后在终端输入cd /usr/local/MATLAB/R2015b/bin进入该路径，最后输入sudo ./matlab即可运行MATLAB！!
+       这一步大概率出错。
+       5.4.1 出现MATLAB is selecting SOFTWARE OPENGL rendering，然后就直接退出了。
+             对应解决办法：sudo apt-get install matlab-support#要输入matlab的路径，不然会找不到的，
+             要看人家的说明啊，就很蠢，没看说明一路enter，然后报错。
+       5.4.2 出现License错误 
+            License Manager Error -8
+            Make sure the HostID of the license file matches this machine, and that the HostID on the SERVER
+            line matches the HostID of the license file.
+            对应解决办法：
+            cd '{PATH_TO_CRACK}/Matlab 2015b Linux64 Crack/R2015b/bin/glnxa64'  # 进入破解包解压目录
+            # copy files libcufft.so.7.0.28  libinstutil.so  libmwservices.so
+            sudo  cp libcufft.so.7.0.28  /usr/local/MATLAB/R2014A/bin/glnxa64/
+            sudo  cp libinstutil.so      /usr/local/MATLAB/R2014A/bin/glnxa64/
+            sudo  cp libmwservices.so    /usr/local/MATLAB/R2014A/bin/glnxa64/
+   5.5 OK!  cd /usr/local/MATLAB/R2015b/bin进入该路径, sudo ./matlab
+   5.6 自己搞一个桌面快捷，
+       或者 sudo ln -s /usr/local/Matlab/bin/matlab(你的安装位置)  /usr/bin/， 然后直接命令行快速启动
+```
+
 #### VPN of cisco client on ubuntu
 
 Run bellow:
@@ -509,3 +563,4 @@ sudo apt-get install network-manager-vpnc network-manager-vpnc-gnome
 ```
 Then, open network manager and add a new VPN, it should show Cisco Compatible VPN in your list now.
 Configure your cisco vpn: vpn ip, group name, group password, your collection name, your collection password.
+
