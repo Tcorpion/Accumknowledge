@@ -501,3 +501,11 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
      * [new branch]      master -> master
     ```
   
+#### VPN of cisco client on ubuntu
+
+Run bellow:
+```
+sudo apt-get install network-manager-vpnc network-manager-vpnc-gnome
+```
+Then, open network manager and add a new VPN, it should show Cisco Compatible VPN in your list now.
+Configure your cisco vpn: vpn ip, group name, group password, your collection name, your collection password.
