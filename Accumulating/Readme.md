@@ -49,7 +49,8 @@ provides a nice guide for engineers.
    3.3 Orientated Bounding box
        3.3.1 [e2cnn, E(2)-Equivariant CNNs] (https://github.com/QUVA-Lab/e2cnn)
        3.3.2 [Official code of the paper "ReDet: A Rotation-equivariant Detector for Aerial Object Detection" (CVPR 2021)] (https://github.com/csuhan/ReDet)
-       
+   3.4 Tricks
+       3.4.1 Soft-NMS to avoid removing true positive boxes by IOU threshold
 
 4. **** (Review) Model Deployment on server
 

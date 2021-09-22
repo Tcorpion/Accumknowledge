@@ -500,7 +500,7 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
     To git@ubuntu:/srv/sample.git
      * [new branch]      master -> master
     ```
-  
+
 #### Install Matlab2015b on Ubuntu20.04
 详细参考别人的[blog](https://blog.csdn.net/weixin_43994864/article/details/111028604)
 ```
@@ -557,6 +557,7 @@ All contents come from [here](https://www.liaoxuefeng.com/article/89592349012777
        或者 sudo ln -s /usr/local/Matlab/bin/matlab(你的安装位置)  /usr/bin/， 然后直接命令行快速启动
 ```
 
+
 #### Increate Batchsize in Pytorch
 Gradients update one time after running multiple inferences as a batch, like:
 ```
@@ -581,3 +582,12 @@ for i_ite, (x, y) in enumerate(dotaloader):
         optimizer.step()
         optimizer.zerograd()
 ```  
+
+#### VPN of cisco client on ubuntu
+
+Run bellow:
+```
+sudo apt-get install network-manager-vpnc network-manager-vpnc-gnome
+```
+Then, open network manager and add a new VPN, it should show Cisco Compatible VPN in your list now.
+Configure your cisco vpn: vpn ip, group name, group password, your collection name, your collection password.
