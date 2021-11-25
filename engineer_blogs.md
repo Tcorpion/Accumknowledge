@@ -591,3 +591,56 @@ sudo apt-get install network-manager-vpnc network-manager-vpnc-gnome
 ```
 Then, open network manager and add a new VPN, it should show Cisco Compatible VPN in your list now.
 Configure your cisco vpn: vpn ip, group name, group password, your collection name, your collection password.
+
+#### ubuntu 掉电/重启 之后， nvidia-smi报错解决
+
+ubuntu关机开机后显卡挂了，报错: `NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. M...`
+如果查看`nvcc -V`, 通常nvcc -V 没报错 说明cuda还是在。
+解决办法[参考1](https://gist.github.com/espoirMur/65cec3d67e0a96e270860c9c276ab9fa) 和 [参考2](https://www.jianshu.com/p/3cedce05a481)
+
+step 1. remove old nvidia driver
+```
+sudo apt-get purge nvidia-*
+sudo apt-get update
+sudo apt-get autoremove
+```
+
+step 2. find the latest stable version of nvidia driver
+```
+apt search nvidia-driver
+```
+
+step 3. 
+   3.1 install the driver, 
+   ```
+   sudo apt install nvidia-driver-470
+   ```
+   3.2 during installation, config a secure word string with 8-16 chars. 
+   3.3 Reboot after finishing installing, select `Enroll MOK`, then type in the secure string. 
+       Note that step-3.3 is necessary. The driver or `nvidia-smi` could NOT RUN if this step was skipped.
+
+step 4. install dkms to make sure kernel compatibility. 掉电/重启之后，nvidia-smi报错，
+通常是由于内核版本与安装驱动时的版本不匹配造成的。dkms专门解决这个问题。
+
+```
+sudo apt-get install dkms #DKMS全称是Dynamic Kernel Module Support，它可以帮我们维护内核外的这些驱动程序，在内核版本变动之后可以自动重新生成新的模块。
+dkms status
+sudo dkms install -m nvidia -v 470.82.00 #470.82.00是安装驱动的版本
+```
+其他博文提到：
+```
+dkms status 显示
+没有执行sudo dkms install -m nvidia -v 410.78之前
+bbswitch, 0.8, 4.15.0-72-generic, x86_64: installed
+bbswitch, 0.8, 4.15.0-74-generic, x86_64: installed
+bbswitch, 0.8, 4.4.0-171-generic, x86_64: installed
+之后
+bbswitch, 0.8, 4.15.0-72-generic, x86_64: installed
+bbswitch, 0.8, 4.15.0-74-generic, x86_64: installed
+bbswitch, 0.8, 4.4.0-171-generic, x86_64: installed
+nvidia, 410.78, 4.15.0-74-generic, x86_64: installed
+```
+
+我的不一样， 运行`dkms install -m nvidia -v xxx`之前和之后的`dkms status`输出都一样，
+是`nvidia, 470.82.00, 5.11.0-40-generic, x86_64: installed`。
+
