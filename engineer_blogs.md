@@ -644,3 +644,30 @@ nvidia, 410.78, 4.15.0-74-generic, x86_64: installed
 我的不一样， 运行`dkms install -m nvidia -v xxx`之前和之后的`dkms status`输出都一样，
 是`nvidia, 470.82.00, 5.11.0-40-generic, x86_64: installed`。
 
+# Ubuntu 20.04 系统分区 方案
+准备一个U盘系统盘，下载好 Ubuntu ISO镜像文件， Ubuntu上命令制作系统盘:
+```
+sudo usb-creator-gtk
+```
+依据提示制作完成.
+
+插上U盘到待装系统主机，重启后按F12，选择U盘启动，启动选择界面有几个选项:
+```
+Ubuntu (有的显示 "Install Ubuntu", 有的只显示"Ubuntu" )
+OEM install (for manufacturers)
+Check Disc for detects
+```
+选择 "Install Ubuntu" 或 "Ubuntu" 进入， 不要选 "OEM install"
+按照引导进入自定义分区，我通常只简单设置3个分区: 
+
+    1.  swap 主分区 8GB, 
+    2.  efi 逻辑分区 ext4 4GB, 
+    3.  / 根分区 逻辑分区 ext4 剩下所有GB
+
+有些人会单独设置 `/home`分区存放用户文件， `/usr` 分区存放用户程序, 我也不知道以后使用会装多少文件和应用程序，
+一开始限制两个的大小，会导致以后二者之一不够放而另一个还有富余空间，干脆都放 `/` 根分区下就不担心了。
+
+然后设置 Device for boot loader installation:`选择 efi 分区`
+
+这里是一些参考 [博文1](https://zhuanlan.zhihu.com/p/268620595) , [博文2](https://blog.csdn.net/weixin_43887661/article/details/106738589)
+
