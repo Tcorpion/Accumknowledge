@@ -671,3 +671,20 @@ Check Disc for detects
 
 这里是一些参考 [博文1](https://zhuanlan.zhihu.com/p/268620595) , [博文2](https://blog.csdn.net/weixin_43887661/article/details/106738589)
 
+
+# conda 下载包太慢或者失败 walk around解决
+conda国内镜像停用了几年，而默认官方源大陆下载太慢，比如cudatoolkit, pytorch经常失败 `conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts -c nvidia`
+参考[知乎博文](https://zhuanlan.zhihu.com/p/73741240)来解决。
+
+step 1. 手动下载安装包。安装下载失败时，终端会显示安装压缩包来源链接，或者直接上官网`https://anaconda.org/pytorch/pytorch/files`找到安装包链接，自己下载下来。
+
+step 2. 安装包放到本地conda缓存目录。`conda info`命令可以找到 package cache 目录，如果conda安装在`/home/${USER}/`目录下，conda package cache通常是`~/anaconda3/pkgs`. 以 cudatoolkit为例, 执行:
+```
+cp cudatoolkit-11.1.74-h6bb024c_0.tar.bz2 ~/anaconda3/pkgs/cudatoolkit-11.1.74-h6bb024c_0.tar.bz2
+cd ~/anaconda3/pkgs/
+mkdir cudatoolkit-11.1.74-h6bb024c_0
+tar -jxvf cudatoolkit-11.1.74-h6bb024c_0.tar.bz2 -C cudatoolkit-11.1.74-h6bb024c_0
+```
+
+step 3. 添加安装包的下载链接到 urls.txt. 命令编辑`vim ~/anaconda3/pkgs/urls.txt`
+
