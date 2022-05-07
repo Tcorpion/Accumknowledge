@@ -1,7 +1,8 @@
 Here are some repeated experiments and recordings related to:
 ```
 0. ***** Daily leetcode (in python/c++)
-
+  0.1 高频题, 好人开发整理: https://codetop.cc/home
+  0.2 个人总结, 写在本子上了，呃呃呃
 
 
 0. ***** Fine-Grained Recognition
@@ -51,6 +52,8 @@ provides a nice guide for engineers.
        3.3.2 [Official code of the paper "ReDet: A Rotation-equivariant Detector for Aerial Object Detection" (CVPR 2021)] (https://github.com/csuhan/ReDet)
    3.4 Tricks
        3.4.1 Soft-NMS to avoid removing true positive boxes by IOU threshold
+   3.5 KeyPoints Detection, MMPose
+   3.6 Skeleton Detection
 
 4. **** (Review) Model Deployment on server
 
@@ -71,12 +74,15 @@ provides a nice guide for engineers.
 10. *** SLAM + 3D 
 
 11. *** Cpp, makefile, cmake, CMakeList.txt, design pattern(in c++/python/java)
+  11.1 VS CODE 官方文档, 支持多种coding语言 https://code.visualstudio.com/docs
+  11.2 C/C++标准库， C/C++标准库到底是什么？ https://blog.csdn.net/lbw520/article/details/104585775
+  11.3 标准库简介， 标准库简介—C++学习 https://blog.csdn.net/weixin_51958878/article/details/116010182
 
 12. *** Model lightweight
-    11.1 Model deployment on embedding/mobile system
-    11.2 Model quantization
-    11.3 Model pruning 
-    11.4 Model distillation
+    12.1 Model deployment on embedding/mobile system
+    12.2 Model quantization
+    12.3 Model pruning 
+    12.4 Model distillation
 
 13. ** DL on Video
 
