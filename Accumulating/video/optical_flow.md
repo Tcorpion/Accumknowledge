@@ -1,3 +1,8 @@
+### 光流用于视频目标检测
+1. https://zhuanlan.zhihu.com/p/66283064
+2. https://zhuanlan.zhihu.com/p/258790731
+
+
 ### 光流Optical Flow介绍
 
 [原文链接](https://blog.csdn.net/zouxy09/article/details/8683859)
