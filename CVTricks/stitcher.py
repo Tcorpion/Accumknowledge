@@ -6,6 +6,7 @@ Stitch two images.
 import os 
 import cv2
 import copy
+import time 
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -65,7 +66,8 @@ class Stitcher:
         #            dtype=np.float32)
         #homography = np.matmul(S, np.matmul(homography, np.mat(S).I)).A
         candidate_homos.append(homography)
-
+        break
+    st_t = time.time()
     # rendering
     boxes = self.boxPoints(image=image_pairs[1], homo=homography)
     bbox0 = self.img_bbox(image_pairs[0])[0].astype(np.int32)
@@ -79,12 +81,12 @@ class Stitcher:
     pano = np.zeros((dsize[1], dsize[0], 3), np.uint8)
     
     ihomo = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=np.float32)
-    homo1, homo2 = np.dot(offset, ihomo), np.dot(offset, candidate_homos[2])
+    homo1, homo2 = np.dot(offset, ihomo), np.dot(offset, candidate_homos[0])
 
     img1, img2 = image_pairs
     cv2.warpPerspective(img1, homo1, dsize, pano, cv2.INTER_AREA, cv2.BORDER_TRANSPARENT)
     cv2.warpPerspective(img2, homo2, dsize, pano, cv2.INTER_AREA, cv2.BORDER_TRANSPARENT)
-    
+    print(f"only affine transformation: {time.time() - st_t}")
     return pano
 
 
@@ -227,8 +229,9 @@ def stitch_demo():
  
     # stitcher = cv2.createStitcher(False)    # 老的OpenCV版本，用这一个
     stitcher = cv2.Stitcher.create(cv2.Stitcher_PANORAMA)  # 我的是OpenCV4
- 
+    st_t = time.time()
     (status, pano) = stitcher.stitch((img1, img2))
+    print(time.time() - st_t)
     if status != cv2.Stitcher_OK:
         print("不能拼接图片, error code = %d" % status)
     else:
@@ -243,8 +246,9 @@ def affine_stitch():
     root = str(CUR_DIR / "stitch_imgs")
     img1 = cv2.imread(f"{root}/img_0002.jpg", 1) 
     img2 = cv2.imread(f"{root}/img_0003.jpg", 1) 
-    
+    st_t = time.time()
     pano = Stitcher().stitch_image_pairs([img1, img2][::-1])
+    print(time.time() - st_t)
     plt.imshow(pano[:, :, ::-1])
     plt.show()
     
@@ -252,7 +256,7 @@ def affine_stitch():
 
 if __name__=="__main__":
     
-    affine_stitch()
+    # affine_stitch()
 
     stitch_demo()
 

@@ -72,6 +72,7 @@ provides a nice guide for engineers.
    9.3 OCR + NLP
 
 10. *** SLAM + 3D 
+  10.1 Eigen C++ lib for matrics:  https://eigen.tuxfamily.org/index.php?title=Main_Page 
 
 11. *** Cpp, makefile, cmake, CMakeList.txt, design pattern(in c++/python/java)
   11.1 VS CODE 官方文档, 支持多种coding语言 https://code.visualstudio.com/docs
