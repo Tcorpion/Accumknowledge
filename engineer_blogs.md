@@ -688,3 +688,10 @@ tar -jxvf cudatoolkit-11.1.74-h6bb024c_0.tar.bz2 -C cudatoolkit-11.1.74-h6bb024c
 
 step 3. 添加安装包的下载链接到 urls.txt. 命令编辑`vim ~/anaconda3/pkgs/urls.txt`
 
+# Latex 写论文
+在线创建，从模板开始创建:
+英文版: https://www.overleaf.com/project 
+中文版: https://cn.overleaf.com/project
+
+LaTeX 特殊符号、加帽子符号、横线和波浪线: https://jensen-lee.blog.csdn.net/article/details/101229496 
+Latex的各种帽子: https://blog.csdn.net/sinat_39616020/article/details/122250818 
