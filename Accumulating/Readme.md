@@ -30,6 +30,9 @@ provides a nice guide for engineers.
        than a few handruds, the recommended method is to split the classes of higher total numbers and train 
        multiple models, then assemble these models in inference by averaging scores from all models. 
        0.5.2 If some classes have few samples, try focal loss.
+   0.6 Posible solution of fine-grained recognition for super-huge number of images, as HUAWEI team said in a 
+       interview, embedding based retrieval is the most efficient and effective method, besides, the embedding
+       training should be implemented on a balanced dataset.
 
 1. **** (Review) Metric Learning + Loss Functions + Self-Supervised Learning.
    These three items are combined together for they are always coupled with each other closely.
@@ -39,6 +42,10 @@ provides a nice guide for engineers.
    2.2 Instance Segmentation
        tricks: FPN + IOU Loss 
    2.3 Panoptic Segmentation
+   2.4 Deconv to the original size of input image(For example, the upsampling in Adalsn)
+       The disadvantage of deconv: [Deconvolution and Checkerboard Artifacts](https://distill.pub/2016/deconv-checkerboard/)
+       Using deconvolution makes Heavy checkerboard artifacts.
+       Using resize-convolution makes No checkerboard artifacts.
 
 3. **** (Review) Detection + Fine-Grained Recognition
    3.1 Anchor Based
