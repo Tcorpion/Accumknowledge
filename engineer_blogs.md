@@ -699,7 +699,7 @@ Latex的各种帽子: https://blog.csdn.net/sinat_39616020/article/details/12225
 # Nodejs
 ubuntu上安装 [nodejs](http://nodejs.cn/)和它的包管理工具NPM, 参考[博文](https://blog.csdn.net/Elford/article/details/123337667)
 nodejs目录结构:
-    ```
+    
     zyl@HHJ:~/node-v17.6.0-linux-x64$ tree -L 2
     .
     ├── bin
@@ -717,7 +717,8 @@ nodejs目录结构:
     ├── LICENSE
     ├── README.md
     └── share
-    ```
+    
+    
 这里的 lib/node_modules是全局的包目录， `npm install -g xxx包名xx`把包安装到这里。cnpm是国内镜像包管理工具，下载更快.
 
 
