@@ -82,7 +82,10 @@ provides a nice guide for engineers.
   10.1 Eigen C++ lib for matrics:  https://eigen.tuxfamily.org/index.php?title=Main_Page 
 
 11. *** Cpp, makefile, cmake, CMakeList.txt, design pattern(in c++/python/java)
-  11.1 VS CODE 官方文档, 支持多种coding语言 https://code.visualstudio.com/docs
+  11.1 VS CODE 官方文档, 支持多种coding语言 https://code.visualstudio.com/docs 
+      11.1.1 vscode默认outline显示函数内部变量，很丑，设置不显示内部变量: https://blog.csdn.net/Zjhao666/article/details/120523879 
+             只需要ctrl+shift+p，修改setting.json的outline.showVariables的默认设置，为false就行了。
+
   11.2 C/C++标准库， C/C++标准库到底是什么？ https://blog.csdn.net/lbw520/article/details/104585775
   11.3 标准库简介， 标准库简介—C++学习 https://blog.csdn.net/weixin_51958878/article/details/116010182
   11.4 linux下g++、make、cmake编译工具代码实例 https://blog.csdn.net/qq_39975542/article/details/124318369

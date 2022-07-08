@@ -722,3 +722,7 @@ nodejs目录结构:
 这里的 lib/node_modules是全局的包目录， `npm install -g xxx包名xx`把包安装到这里。cnpm是国内镜像包管理工具，下载更快.
 
 在终端运行`node xxx.js`, 首先明确全局模块的默认安装位置：`npm root -g`, 确保添加环境变量 NODE_PATH 值为：nodejs安装目录下node_modules文件夹。也就是上一步命令输出的结果。这样才能保证`node xxx.js`能正常获取依赖包的位置，否则会报错比如`Error: Cannot find module 'jsdom'`
+
+```
+export NODE_PATH="/home/${USR_NAME}/node-v17.6.0-linux-x64/lib/node_modules"
+```
