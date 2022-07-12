@@ -71,7 +71,8 @@ provides a nice guide for engineers.
 
 7. *** RL Introduction
 
-8. *** OCR Application
+8. *** OCR Application 
+   8.1 [Engineering sharing of OCR](https://zhuanlan.zhihu.com/p/368035566)  
 
 9. *** NLP
    9.1 (Review) NLP introduction

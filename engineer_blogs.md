@@ -696,6 +696,17 @@ step 3. 添加安装包的下载链接到 urls.txt. 命令编辑`vim ~/anaconda3
 LaTeX 特殊符号、加帽子符号、横线和波浪线: https://jensen-lee.blog.csdn.net/article/details/101229496 
 Latex的各种帽子: https://blog.csdn.net/sinat_39616020/article/details/122250818 
 
+## ubuntu20.04安装latex
+step 1. 从镜像网址下载[texlive2022](https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/), 找到`texlive2022.iso`
+
+step 2. 加载镜像文件(确认你有`/mnt`目录): `sudo mount -o loop ~/Download/texlive2022.iso /mnt`  
+
+step 3. 然后启动图形界面安装:
+```
+cd /mnt
+sudo ./install-tl -gui
+```
+
 # Nodejs
 ubuntu上安装 [nodejs](http://nodejs.cn/)和它的包管理工具NPM, 参考[博文](https://blog.csdn.net/Elford/article/details/123337667)
 nodejs目录结构:
