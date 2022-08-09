@@ -43,6 +43,15 @@ jupyter notebook
 ```
 去浏览器打开,输入登录密码, 尽情享用
 
+jupyter自动[代码补全](https://wenku.baidu.com/view/d47b53fd53e2524de518964bcf84b9d528ea2cdc.html)
+```
+# 安装 jupyter_contrib_nbextensions
+pip install jupyter_contrib_nbextensions -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com 
+# 关闭 jupyter, 配置 nbextension
+jupyter contrib nbextension install --user --skip-running-check
+# 打开jyputer, 进入 nbextension， 增加勾选hinterland
+```
+
 #### How to set vncserver
 
 ubuntu18.04选择使用xfce4作为远程桌面, 参考[这里](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-18-04)或者腾讯的[配置步骤](https://cloud.tencent.com/developer/article/1350304):
