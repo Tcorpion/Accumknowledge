@@ -81,6 +81,9 @@ provides a nice guide for engineers.
 
 10. *** SLAM + 3D 
   10.1 Eigen C++ lib for matrics:  https://eigen.tuxfamily.org/index.php?title=Main_Page 
+  10.2 camera modeling, Intrinsics & Extrinsics: 
+       https://zhuanlan.zhihu.com/p/389653208 
+       SLAM十四讲
 
 11. *** Cpp, makefile, cmake, CMakeList.txt, design pattern(in c++/python/java)
   11.1 VS CODE 官方文档, 支持多种coding语言 https://code.visualstudio.com/docs 
