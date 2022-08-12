@@ -52,6 +52,12 @@ jupyter contrib nbextension install --user --skip-running-check
 # 打开jyputer, 进入 nbextension， 增加勾选hinterland
 ```
 
+jupyter tqdm设置:
+```
+# ’tqdm_notebook’ object has no attribute 'disp’的错误
+pip install ipywidgets
+```
+
 #### How to set vncserver
 
 ubuntu18.04选择使用xfce4作为远程桌面, 参考[这里](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-18-04)或者腾讯的[配置步骤](https://cloud.tencent.com/developer/article/1350304):
