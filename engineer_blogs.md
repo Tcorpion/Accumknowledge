@@ -1,5 +1,12 @@
 Useful technique
 
+#### Linux(ubuntu) tools
+List the storage usage:
+```
+du -lh /home --max-depth=1  # -lh 查看的是GB/MB/KB显示, 换成-l的话显示的是字节数 
+ps -f # 查看当前终端的后台进程
+```
+
 #### Where to learn Nginx
 https://tengine.taobao.org/book/index.html
 
