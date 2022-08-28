@@ -1,9 +1,14 @@
 Useful technique
 
 #### Linux(ubuntu) tools
-List the storage usage:
+
 ```
-du -lh /home --max-depth=1  # -lh 查看的是GB/MB/KB显示, 换成-l的话显示的是字节数 
+# List the disk usage:
+df -hl
+
+# List the storage usage, -lh 查看的是GB/MB/KB显示, 换成-l的话显示的是字节数 
+du -lh /home --max-depth=1  
+
 ps -f # 查看当前终端的后台进程
 ```
 
