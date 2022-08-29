@@ -1,4 +1,6 @@
-Here are some repeated experiments and recordings related to:
+Here are some repeated experiments and recordings related to
+--
+
 ```
 0. ***** Daily leetcode (in python/c++)
   0.1 高频题, 好人开发整理: https://codetop.cc/home
@@ -135,3 +137,23 @@ provides a nice guide for engineers.
 The above experiments will **take less than 50% time** compared to repeating on mmdetection/mmsegmentation, since **in 
 mmdetection/mmsegmentation more methods and parameters** will be used.
 
+
+Topics on autonomous driving
+--
+
+Academic references
+
+|会议| 期刊
+| ---- | ---- |
+| ICRA | IJRR |
+| IROS | JFR |
+| IV | IEEE TRANS ON INTELLIGENT VEHICLEs |
+| ITSC | IEEE TRANS ON ROROTICS |
+| RSS | IEEE Transactions on Intelligent Transportation Systems |
+| ACC | IEEE Intelligent Transportation Systems Magazine |
+| CDC | Transportation Research Part A,B,C D E |
+
+ICRA22: 
+* [tutorial](https://www.icra2022.org/program/workshops-and-tutorials) , 
+* [Fresh Perspectives on the Future of Autonomous Driving](https://www.icra2022av.org/%20)
+* [Robotic Perception and Mapping: Emerging Techniques](https://sites.google.com/view/ropm)
