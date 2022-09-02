@@ -707,7 +707,7 @@ nvidia, 410.78, 4.15.0-74-generic, x86_64: installed
 我的不一样， 运行`dkms install -m nvidia -v xxx`之前和之后的`dkms status`输出都一样，
 是`nvidia, 470.82.00, 5.11.0-40-generic, x86_64: installed`。
 
-# Ubuntu 20.04 系统分区 方案
+#### Ubuntu 20.04 系统分区 方案
 准备一个U盘系统盘，下载好 Ubuntu ISO镜像文件， Ubuntu上命令制作系统盘:
 ```
 sudo usb-creator-gtk
@@ -735,7 +735,7 @@ Check Disc for detects
 这里是一些参考 [博文1](https://zhuanlan.zhihu.com/p/268620595) , [博文2](https://blog.csdn.net/weixin_43887661/article/details/106738589)
 
 
-# conda 下载包太慢或者失败 walk around解决
+#### conda 下载包太慢或者失败 walk around解决
 conda国内镜像停用了几年，而默认官方源大陆下载太慢，比如cudatoolkit, pytorch经常失败 `conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts -c nvidia`
 参考[知乎博文](https://zhuanlan.zhihu.com/p/73741240)来解决。
 
@@ -751,7 +751,7 @@ tar -jxvf cudatoolkit-11.1.74-h6bb024c_0.tar.bz2 -C cudatoolkit-11.1.74-h6bb024c
 
 step 3. 添加安装包的下载链接到 urls.txt. 命令编辑`vim ~/anaconda3/pkgs/urls.txt`
 
-# Latex 写论文
+#### Latex 写论文
 在线创建，从模板开始创建:
 英文版: https://www.overleaf.com/project 
 中文版: https://cn.overleaf.com/project
@@ -759,7 +759,7 @@ step 3. 添加安装包的下载链接到 urls.txt. 命令编辑`vim ~/anaconda3
 LaTeX 特殊符号、加帽子符号、横线和波浪线: https://jensen-lee.blog.csdn.net/article/details/101229496 
 Latex的各种帽子: https://blog.csdn.net/sinat_39616020/article/details/122250818 
 
-## ubuntu20.04安装latex
+#### ubuntu20.04安装latex
 step 1. 从镜像网址下载[texlive2022](https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/), 找到`texlive2022.iso`
 
 step 2. 加载镜像文件(确认你有`/mnt`目录): `sudo mount -o loop ~/Download/texlive2022.iso /mnt`  
@@ -770,7 +770,7 @@ cd /mnt
 sudo ./install-tl -gui
 ```
 
-# Nodejs
+#### Nodejs
 ubuntu上安装 [nodejs](http://nodejs.cn/)和它的包管理工具NPM, 参考[博文](https://blog.csdn.net/Elford/article/details/123337667)
 nodejs目录结构:
     
@@ -800,3 +800,32 @@ nodejs目录结构:
 ```
 export NODE_PATH="/home/${USR_NAME}/node-v17.6.0-linux-x64/lib/node_modules"
 ```
+
+#### create new user on ubuntu
+
+在root用户下
+```
+~# sudo adduser 新用户名
+会自动创建用户主目录和同名的组
+接下来输入用户密码
+Full Name []:
+Room Number []:
+Work Phone []:
+Home Phone []:
+Other []:
+Full Name []:等信息一路回车
+这个信息是否正确？ [Y/n] y
+到此用户添加成功
+```
+
+给 new user root权限
+```
+在root用户下编辑 /etc/sudoers文件
+~# sudo vim /etc/sudoers
+修改文件如下：
+root ALL=(ALL) ALL
+新用户 ALL=(ALL) ALL
+按Esc键 切换到文件操作，输入:wq 保存并退出
+```
+
+也有可能是加到sudo权限组来赋予root权限
