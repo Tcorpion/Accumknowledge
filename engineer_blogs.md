@@ -828,4 +828,9 @@ root ALL=(ALL) ALL
 按Esc键 切换到文件操作，输入:wq 保存并退出
 ```
 
-也有可能是加到sudo权限组来赋予root权限
+也有可能是加到sudo权限组，来赋予root权限（对应报错：$ XXX is not in the sudoers file. ）
+```
+#从具有root权限的用户来给new user权限，
+#找到/etc/group文件里面这一行 "sudo:x:27:userA,userB,{这里补上新用户名}"
+sudo vim /etc/group 
+```
