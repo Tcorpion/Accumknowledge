@@ -834,3 +834,28 @@ root ALL=(ALL) ALL
 #找到/etc/group文件里面这一行 "sudo:x:27:userA,userB,{这里补上新用户名}"
 sudo vim /etc/group 
 ```
+
+
+#### python multiprocessing 
+多进程加速，并拿回每个进程返回结果
+```
+pool = multiprocessing.Pool(processes=workers) 
+pbar = tqdm.tqdm(total=len(arg_list), desc="processing")
+call_bk = lambda args: pbar.update() 
+rsts = [] 
+for arg in arg_list:
+    rsts.append(pool.apply_async(
+        func=process_fun, args=arg, callback=call_bk
+    ))
+pool.close()
+pool.join()
+
+ans = []
+for id, _r in enumerate(rsts):
+    try:
+        _ans = _r.get()
+        ans.extend(_ans)
+    except Exception as e:
+        print(f"Failed on subprocess: {arg_list[id]}")
+        print(e)
+```
