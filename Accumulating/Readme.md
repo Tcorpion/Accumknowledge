@@ -141,7 +141,7 @@ mmdetection/mmsegmentation more methods and parameters** will be used.
 Topics on autonomous driving
 --
 
-Academic references
+#### Academic references
 
 |会议| 期刊
 | ---- | ---- |
@@ -157,3 +157,9 @@ ICRA22:
 * [tutorial](https://www.icra2022.org/program/workshops-and-tutorials) , 
 * [Fresh Perspectives on the Future of Autonomous Driving](https://www.icra2022av.org/%20)
 * [Robotic Perception and Mapping: Emerging Techniques](https://sites.google.com/view/ropm)
+
+#### Lane detection
+
+* Tusimple lane data:  https://github.com/TuSimple/tusimple-benchmark/tree/master/doc/lane_detection
+* TuSimple lane detection dataset addon with class information:  https://github.com/fabvio/TuSimple-lane-classes 
+* TODO look repo: https://github.com/voldemortX/pytorch-auto-drive 
