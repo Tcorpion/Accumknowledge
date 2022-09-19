@@ -162,4 +162,4 @@ ICRA22:
 
 * Tusimple lane data:  https://github.com/TuSimple/tusimple-benchmark/tree/master/doc/lane_detection
 * TuSimple lane detection dataset addon with class information:  https://github.com/fabvio/TuSimple-lane-classes 
-* TODO look repo: https://github.com/voldemortX/pytorch-auto-drive 
+* TODO look repo: https://github.com/voldemortX/pytorch-auto-drive , https://github.com/Turoad/lanedet
