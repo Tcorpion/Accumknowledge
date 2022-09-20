@@ -158,6 +158,10 @@ ICRA22:
 * [Fresh Perspectives on the Future of Autonomous Driving](https://www.icra2022av.org/%20)
 * [Robotic Perception and Mapping: Emerging Techniques](https://sites.google.com/view/ropm)
 
+#### Browse SOTA 
+
+https://paperswithcode.com/task/lane-detection
+
 #### Lane detection
 
 * Tusimple lane data:  https://github.com/TuSimple/tusimple-benchmark/tree/master/doc/lane_detection
