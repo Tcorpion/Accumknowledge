@@ -10,6 +10,13 @@ df -hl
 du -lh /home --max-depth=1  
 
 ps -f # 查看当前终端的后台进程
+
+# 设置文件夹的读写权限: sudo chmod -R 777 /data 权限码描述 
+sudo chmod 600 ××× (只有所有者有读和写的权限)
+sudo chmod 644 ××× (所有者有读和写的权限,组用户只有读的权限)
+sudo chmod 700 ××× (只有所有者有读和写以及执行的权限)
+sudo chmod 666 ××× (每个人都有读和写的权限)
+sudo chmod 777 ××× (每个人都有读和写以及执行的权限) -R表示包含设置所有子目录
 ```
 
 #### Where to learn Nginx
