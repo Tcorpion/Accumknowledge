@@ -17,6 +17,10 @@ sudo chmod 644 ××× (所有者有读和写的权限,组用户只有读的权�
 sudo chmod 700 ××× (只有所有者有读和写以及执行的权限)
 sudo chmod 666 ××× (每个人都有读和写的权限)
 sudo chmod 777 ××× (每个人都有读和写以及执行的权限) -R表示包含设置所有子目录
+
+# scp with password
+sshpass -p 密码 scp -P 端口 源文件 目的文件
+sshpass -p 123456 scp -r /src_dir/data-2022-08-31/ user@192.168.1.10:/target_dir/
 ```
 
 #### Where to learn Nginx
