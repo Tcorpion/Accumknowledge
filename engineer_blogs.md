@@ -21,6 +21,13 @@ sudo chmod 777 ××× (每个人都有读和写以及执行的权限) -R表示�
 # scp with password
 sshpass -p 密码 scp -P 端口 源文件 目的文件
 sshpass -p 123456 scp -r /src_dir/data-2022-08-31/ user@192.168.1.10:/target_dir/
+
+# ssh key, [添加A机器的ssh key到B机器, A可以免密登录和取文件](https://blog.csdn.net/nb1253587023/article/details/125507612)
+# 1、先在主机A上创建密钥对: 
+ssh-keygen -t rsa  # 这时可以在主机A上看到生成的秘钥~/.ssh/id_rsa 和公钥 ~/.ssh/ id_rsa.pub
+
+# 2、把主机A的公钥放在主机B上
+scp -r /home/userA/.ssh/id_rsa.pub 192.168.31.147:/home/userB/.ssh/authorized_keys # 也可手动创建文本文件保存/home/userA/.ssh/id_rsa.pub里面内容
 ```
 
 #### Where to learn Nginx
