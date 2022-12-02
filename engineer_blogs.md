@@ -30,6 +30,82 @@ ssh-keygen -t rsa  # 这时可以在主机A上看到生成的秘钥~/.ssh/id_rsa
 scp -r /home/userA/.ssh/id_rsa.pub 192.168.31.147:/home/userB/.ssh/authorized_keys # 也可手动创建文本文件保存/home/userA/.ssh/id_rsa.pub里面内容
 ```
 
+#### tar zip unzip
+```
+1. tar包和gz包
+tar包和gz包是两个不同的文件包，有三种不同后缀。.tar   .gz    .tar.gz
+tar包：使用tar命令，打包文件或者文件夹，只打包，不压缩
+gz包：使用gzip命令，只压缩文件，不打包，所以gz包操作不能对文件夹直接操作，如果要对文件夹下所有文件进行压缩，使用-r参数，gzip -r 文件夹路径
+tar.gz：使用tar加-z参数，tar -zcvf filename.tar.gz dir/file   打包压缩文件或者文件夹
+
+tar参数有 z，c，x，v，f
+-z 表示压缩操作类型是 .tar.gz
+-c 表示当前行为是打包
+-x 表示当前行为是解压文件包
+-v 参数要求显示命令执行过程
+-f 指定打包后文件名
+-C 解压到指定路径
+```
+```
+tar -zcvf tarame.tar.gz dir/files   # 常用压缩打包命令
+
+tar -zxvf tarname.tar.gz -C 指定解压后文件存放地址   # 常用解压缩命令
+```
+
+
+
+```
+gzip常用参数有 d，c，t，v
+-d 解压gz压缩包
+-c 控制台窗口打印压缩后文件内容，源文件不变，执行后不生成压缩包
+-v 显示压缩百分比
+-t 测试已压缩文件是否正确，需要文件压缩成压缩文件后执行
+```
+```
+gzip -c fileName > fileName.gz # 要同时保留原文件和压缩文件，需要手动将写入压缩文件
+
+gzip -dc fileName.gz > fileName  # 解压操作保留原文件
+
+
+# ================================
+gzip fileName   # 直接压缩文件命令
+gzip -d fileName.gz  # 解压缩文件
+注意：gzip命令默认是直接改变源文件，也就是执行gzip filename后，当前路径只有压缩后的文件，文件名是 原文件名.gz
+# ================================
+```
+
+```
+2. zip包
+从本地打包上传到服务器的压缩包，一般都是zip或者rar格式，而不是tar包格式。
+zip包上传到服务器后，使用unzip命令解压，压缩成zip包使用zip命令
+
+zip和unzip命令需要安装，使用yum直接安装：
+apt-get install zip -y
+apt-get install unzip -y
+
+zip常用参数有 r，q，d
+-r 压缩文件夹，递归执行，压缩文件夹下所有文件
+-q 不显示压缩过程，默认会在控制台打印压缩文件过程
+-d 压缩过程中剔除指定文件， -d参数后跟随的文件不打包到压缩包里
+```
+
+```
+zip -r dirpath/ -d a.txt b.text  # 压缩文件夹且排除指定文件不压缩
+```
+
+```
+unzip常用参数有 n，v，d
+-n 解压后不覆盖已存在文件，如果压缩包文件中与解压路径有同名文件，跳过该文件
+-v 控制台打印显示压缩包内容，但是不解压，-v参数只进行查看
+-d 指定解压后文件存放路径
+```
+
+```
+unzip -n file.zip -d dirpath/  # 解压到指定路径，不覆盖已有同名文件
+
+unzip file.zip # unzip常直接使用，解压到当前路径，覆盖同名文件
+```
+
 #### Where to learn Nginx
 https://tengine.taobao.org/book/index.html
 
