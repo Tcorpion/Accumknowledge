@@ -953,3 +953,22 @@ for id, _r in enumerate(rsts):
         print(f"Failed on subprocess: {arg_list[id]}")
         print(e)
 ```
+
+#### pytorch ddp train
+在train.py里面已经实现好ddp的model和dataloader的基础上，执行以下进行多卡训练(也可以多机)
+```
+#!/usr/bin/env bash
+
+CONFIG=$1
+GPUS=$2
+PORT=${PORT:-28519}
+
+# 避免多卡训练卡死，表现只在每个卡上load了部分权值，无法load dataset就卡死
+export NCCL_P2P_DISABLE=1
+# 避免启动太多cpu线程导致cpu占用飙升
+export OMP_NUM_THREADS=1
+
+PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
+python3 -m torch.distributed.launch --nproc_per_node=$GPUS --master_port=$PORT \
+    $(dirname "$0")/train.py $CONFIG --launcher pytorch ${@:3} --deterministic
+```
