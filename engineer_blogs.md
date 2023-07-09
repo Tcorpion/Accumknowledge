@@ -972,3 +972,58 @@ PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
 python3 -m torch.distributed.launch --nproc_per_node=$GPUS --master_port=$PORT \
     $(dirname "$0")/train.py $CONFIG --launcher pytorch ${@:3} --deterministic
 ```
+
+#### vscode debug json 模版
+参考下面的改写跑debug
+```
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python-Module",
+            "type": "python",
+            "request": "launch",
+            "module": "torch.distributed.launch",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH":"${PYTHONPATH}:.",
+                "CUDA_VISIBLE_DEVICES":"3",
+            },
+            "args": [
+                "--nproc_per_node", "1",
+                "--master_port", "28597",
+                "tools/test.py",
+                "./projects/configs/stage1_track_map/base_track_map.py",
+                "ckpts/uniad_base_track_map.pth",
+                "--launcher", "pytorch",
+                "--eval", "bbox",
+                "--show-dir", "./tmp/",
+                "--out", "./tmp/results.pkl",
+            ],
+        },
+        {
+            "name": "dataset train",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/label",
+            "env": {
+                "CUDA_VISIBLE_DEVICES":"2,5"
+            },
+            "args": [
+                "--config", "configs/res101_s4.py", 
+                "--checkpoint", "./resnet101.pth",
+                "--show", 
+                "--local_rank", "0",
+                "--result_dst", "./work_rsts/txts/", 
+                "--show_dst", "./work_rsts/imgs/",
+            ],
+            "program": "tools/infer_test.py", 
+            "console": "integratedTerminal",
+        },
+    ]
+}
+```
