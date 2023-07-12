@@ -613,7 +613,7 @@ sslocal -c ~/local_shadowsocks.json
     然后直接挂载
     ``` 
     sudo mkdir /datadrive                   # 创建挂载点
-    sudo mount /dev/vdb /datadrive          # 手动挂载
+    sudo mount /dev/vdb /datadrive          # 手动挂载, 这种挂载在ubuntu重启后会失效，只能单次使用
     ```
     查看挂载后的硬盘情况:`df -lh`
     ``` 
@@ -628,7 +628,41 @@ sslocal -c ~/local_shadowsocks.json
     tmpfs           1.6G  4.0K  1.6G   1% /run/user/500
     /dev/vdb        2.0T   81M  1.9T   1% /datadrive
     ```
-    
+
+    解决重启后mount的盘丢失不见，执行命令
+    ```
+    $ sudo blkid
+    /dev/sda1: UUID="2DD7-FB29" TYPE="vfat" PARTUUID="92f51aa7-276e-4b8c-a360-2542f0574b00"
+    /dev/sda3: UUID="978dffe7-52a2-4a32-a2ed-2136829d6240" TYPE="ext4" PARTUUID="06f7dda3-a521-427d-81c2-4b16bb8aa33e"
+    /dev/sda6: UUID="6647c018-c89c-4641-b04b-740e4042bb17" TYPE="swap" PARTUUID="e1686689-4d32-49ee-a2a7-020b835cdcd2"
+    /dev/sdb1: UUID="092fc25b-3baf-4a9f-bf83-0481833571e2" TYPE="ext3" PARTUUID="07fb746a-01"
+    /dev/sda2: PARTUUID="44c05b25-56bd-4108-b651-c12bc843fee3"
+    ```
+    找到第目标硬盘的UUID引号内部分，复制UUID，执行命令
+    ```
+    $ sudo vim /etc/fstab 
+    # /etc/fstab: static file system information.
+    #
+    # Use 'blkid' to print the universally unique identifier for a
+    # device; this may be used with UUID= as a more robust way to name devices
+    # that works even if disks are added and removed. See fstab(5).
+    #
+    # <file system> <mount point>   <type>  <options>       <dump>  <pass>
+    # / was on /dev/sda4 during installation
+    UUID=237573e4-4bfc-4fbe-bb9a-c26c87b8a494 /               ext4    errors=remount-ro 0       1
+    # /boot was on /dev/sda3 during installation
+    UUID=978dffe7-52a2-4a32-a2ed-2136829d6240 /boot           ext4    defaults        0       2
+    # /boot/efi was on /dev/sda1 during installation
+    UUID=2DD7-FB29  /boot/efi       vfat    umask=0077      0       1
+    # /home was on /dev/sda5 during installation
+    UUID=f33040da-3a00-460f-b721-212e50964626 /home           ext4    defaults        0       2
+    # swap was on /dev/sda6 during installation
+    UUID=6647c018-c89c-4641-b04b-740e4042bb17 none            swap    sw              0       0
+    # 这里是复制的uuid
+    UUID=092fc25b-3baf-4a9f-bf83-0481833571e2  /datadrive        ext3    defaults  0       0 
+    ```
+    把复制的内容按照上面的格式添加到最后,一定不能写错,注意去掉双引号,写错了会导致服务器无法开机,重启OK
+
 #### Deploy git repo for a small team
 All contents come from [here](https://www.liaoxuefeng.com/article/895923490127776). This is a duplicated recording for myself.
 以ubuntu服务器为例，如果要创建小范围的私有git服务器，是非常简单的，只需要如下几个简单步骤：
