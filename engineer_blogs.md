@@ -963,6 +963,23 @@ root ALL=(ALL) ALL
 sudo vim /etc/group 
 ```
 
+#### python opencv 图形去畸变
+opencv python undistortion case
+```
+def undistort_img(img_arr, cam_name, cams_intri):
+    intris = cams_intri[cam_name]
+    D, K = intris['D'], intris['K']
+    fx, fy, cx, cy = K
+
+    D = np.array(D) # k1, k2, p1, p2 = D
+    k_mat = np.array([[fx, 0, cx], [0, fy, cy], [0, 0, 1]], dtype=np.float64)
+
+    if cam_name == 'FOV_60': # FOV 60
+        img_new = cv2.undistort(img_arr, k_mat, D)
+    else:  # FOV 120
+        img_new = cv2.fisheye.undistortImage(img_arr, k_mat, D, Knew=k_mat)
+    return img_new
+```
 
 #### python multiprocessing 
 多进程加速，并拿回每个进程返回结果
