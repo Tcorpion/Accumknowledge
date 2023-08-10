@@ -1078,3 +1078,165 @@ python3 -m torch.distributed.launch --nproc_per_node=$GPUS --master_port=$PORT \
     ]
 }
 ```
+
+
+#### onnx 2 trt
+How to get trt from onnx
+--
+
+Some reference blogs [csdn](https://blog.csdn.net/qq_39056987/article/details/124588857)
+
+目前跑通的: pytorch model -> onnx -> trt (by trtexec)
+
+pytorch model 转 onnx参考[官网 super_resolution_with_onnxruntime](https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html)
+
+onnx转trt, 选用工具nvidia的工具trtexec, 下载[链接](https://developer.nvidia.com/nvidia-tensorrt-8x-download)
+下载的 TensorRT-8.4.3.1.Linux.x86_64-gnu.cuda-11.6.cudnn8.4.tar.gz 解压后如下:
+
+```
+tree ./TensorRT-8.4.3.1.Linux.x86_64-gnu.cuda-11.6.cudnn8.4 -L 2
+./TensorRT-8.4.3.1.Linux.x86_64-gnu.cuda-11.6.cudnn8.4
+└── TensorRT-8.4.3.1
+    ├── bin
+    ├── data
+    ├── doc
+    ├── graphsurgeon
+    ├── include
+    ├── lib
+    ├── onnx_graphsurgeon
+    ├── python
+    ├── samples
+    ├── targets
+    └── uff
+```
+
+onnx转trt, python调用trt, 下面的环境变量是必须的
+
+```
+TRT_ROOT=${pathto}/TensorRT-8.4.3.1.Linux.x86_64-gnu.cuda-11.6.cudnn8.4/TensorRT-8.4.3.1
+TRT_LIB=${TRT_ROOT}/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TRT_LIB
+```
+
+然后使用trtexec工具生成trt文件
+
+```
+# trt生成命令
+
+tgt_onnx=./onnx/Network_V23.03.27.onnx
+# onnxsim ${tgt_onnx} ${tgt_onnx}.sim --no-large-tensor  # pip install onnxsim, 简化网络架构
+# tgt_onnx=${tgt_onnx}.sim
+
+# fp16
+# ${TRT_ROOT}/bin/trtexec --onnx=${tgt_onnx} --saveEngine=./trt/Network_V23.03.27_gapart_b3_fp16.trt --fp16 --verbose
+${TRT_ROOT}/bin/trtexec --onnx=${tgt_onnx} --saveEngine=./trt/Network_V23.03.27_fp16.trt  --minShapes=input:1x3x320x800 --optShapes=input:3x3x320x800 --maxShapes=input:3x3x320x800 --fp16 --verbose
+
+# fp32
+# ${TRT_ROOT}/bin/trtexec --onnx=${tgt_onnx} --saveEngine=./trt/Network_V23.03.27_gapart_b3_fp32.trt --verbose
+${TRT_ROOT}/bin/trtexec --onnx=${tgt_onnx} --saveEngine=./trt/Network_V23.03.27_fp32.trt   --minShapes=input:1x3x320x800 --optShapes=input:3x3x320x800 --maxShapes=input:3x3x320x800  --verbose
+```
+
+python调用trt示例
+
+```
+
+import time 
+import tensorrt as trt
+import pycuda.autoinit # 没有这行会报错
+import pycuda.driver as cuda
+
+
+class HostDeviceMem(object):
+    def __init__(self, host_mem, device_mem):
+        self.host = host_mem
+        self.device = device_mem
+
+    def __str__(self):
+        return "Host:\n" + str(self.host) + "\nDevice:\n" + str(self.device)
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class TrtModel:
+    
+    def __init__(self, engine_path, max_batch_size=1, dtype=np.float32):
+        
+        self.engine_path = engine_path
+        self.dtype = dtype
+        self.logger = trt.Logger(trt.Logger.WARNING)
+        self.runtime = trt.Runtime(self.logger)
+        self.engine = self.load_engine(self.runtime, self.engine_path)
+        self.max_batch_size = max_batch_size
+        self.inputs, self.outputs, self.bindings, self.stream, self.out_names = self.allocate_buffers()
+        self.context = self.engine.create_execution_context()
+        self.out_order = ['kpts_hm', 'pts_offset', 'int_offset', 'kpts_hm_nms', 
+                                    'stl_out_0', 'stl_out_1', 'stl_out_2', 
+                                    'stl_err_0', 'stl_err_1', 'stl_err_2', 
+                                    'kpts_err']
+        self.out_shapes = [(1, 80, 200), (2, 80, 200), (2, 80, 200), (1, 80, 200), (5, 40, 50), (5, 40, 25), (5, 40, 13), (5, 40, 50), (5, 40, 25), (5, 40, 13), (2, 80, 200)]
+                
+    @staticmethod
+    def load_engine(trt_runtime, engine_path):
+        trt.init_libnvinfer_plugins(None, "")             
+        with open(engine_path, 'rb') as f:
+            engine_data = f.read()
+        engine = trt_runtime.deserialize_cuda_engine(engine_data)
+        return engine
+    
+
+    def allocate_buffers(self):
+        
+        inputs = []
+        outputs = []
+        bindings = []
+        out_names = []
+        stream = cuda.Stream()
+        
+        for binding in self.engine:
+            size = trt.volume(self.engine.get_binding_shape(binding)) * self.max_batch_size
+            host_mem = cuda.pagelocked_empty(size, self.dtype)
+            device_mem = cuda.mem_alloc(host_mem.nbytes)
+            
+            bindings.append(int(device_mem))
+            
+            if self.engine.binding_is_input(binding):
+                inputs.append(HostDeviceMem(host_mem, device_mem))
+            else:
+                outputs.append(HostDeviceMem(host_mem, device_mem))
+                out_names.append(binding)
+        
+        return inputs, outputs, bindings, stream, out_names
+       
+            
+    def __call__(self, x:np.ndarray, batch_size=2):
+        
+        x = x.astype(self.dtype)
+        
+        np.copyto(self.inputs[0].host, x.ravel())
+        
+        for inp in self.inputs:
+            cuda.memcpy_htod_async(inp.device, inp.host, self.stream)
+        
+        self.context.execute_async(batch_size=batch_size, bindings=self.bindings, stream_handle=self.stream.handle)
+        for out in self.outputs:
+            cuda.memcpy_dtoh_async(out.host, out.device, self.stream) 
+            
+        
+        self.stream.synchronize()
+        outputs = {name: out.host.reshape(batch_size, -1) for name, out in zip(self.out_names, self.outputs)}
+        # return [out.host.reshape(batch_size,-1) for out in self.outputs]
+        out_list = [outputs[k].reshape(batch_size, *shape) for k, shape in zip(self.out_order, self.out_shapes)]
+        return out_list
+```
+
+The tensorrt engine built with python api is always running on GPU:0. For pycuda, you can set the environment CUDA_DEVICE before
+```
+import pycuda.driver as cuda
+import pycuda.autoinit
+```
+e.g., to set os.environ['CUDA_DEVICE'] = '1' will make GPU:1 as the default device. 
+
+
+
+
