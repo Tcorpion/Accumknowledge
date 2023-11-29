@@ -30,6 +30,20 @@ ssh-keygen -t rsa  # 这时可以在主机A上看到生成的秘钥~/.ssh/id_rsa
 scp -r /home/userA/.ssh/id_rsa.pub 192.168.31.147:/home/userB/.ssh/authorized_keys # 也可手动创建文本文件保存/home/userA/.ssh/id_rsa.pub里面内容
 ```
 
+#### shell output timestamp
+```
+time1=$(date +"%Y-%m-%d %H:%M:%S").$((`date +"+%N"`/100000))
+colmap feature_extractor \
+   --ImageReader.single_camera 1 \
+   --database_path $DATASET_PATH/database.db \
+   --image_path $DATASET_PATH/images \
+   --SiftExtraction.gpu_index 0
+   # --SiftExtraction.use_gpu 0
+time2=$(date +"%Y-%m-%d %H:%M:%S").$((`date +"+%N"`/100000))
+echo "start: ${time1}"
+echo "end  : ${time2}"
+```
+
 #### tar zip unzip
 ```
 1. tar包和gz包
