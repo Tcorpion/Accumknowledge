@@ -10,32 +10,35 @@
   * Install nvidia-drivers and cuda drivers required for running current versions of models: [guide](https://gist.github.com/bzamecnik/b0c342d22a2a21f6af9d10eba3d4597b) can be used, but be sure to modify CUDA and cuDNN to the desired versions
     * Verify drivers installed by running `nvidia-smi` in shell, this will display a status output of your gpu device
 
-  * Install [docker](https://docs.docker.com/install/) and [nvidia docker version 2.0](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0)). The easiest way to do this is to run
-    * `curl -fsSL get.docker.com -o get-docker.sh` and then `sh get-docker.sh`, this installs docker
-    * Follow steps in [nvidia docker](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0)) to install/
-    * ~~ if you can't install nvidia-docker2 after `sudo apt-get update`, see: https://nvidia.github.io/nvidia-docker/
-    * Verify the installation by running `sudo docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi`, this runs the same `nvidia-smi` command as before but inside of the docker container, if all is working then you will see similar status screen
+  * Install [docker](https://docs.docker.com/engine/install/ubuntu/) and
+  * Install [nvidia-container-toolkit or nvidia-container-runtime](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) after docker installation.
     ```
-        Mon Mar 18 09:32:18 2019       
-    +-----------------------------------------------------------------------------+
-    | NVIDIA-SMI 396.26                 Driver Version: 396.26                    |
-    |-------------------------------+----------------------+----------------------+
-    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-    |===============================+======================+======================|
-    |   0  Tesla K80           Off  | 00008751:00:00.0 Off |                    0 |
-    | N/A   64C    P0    64W / 149W |      0MiB / 11441MiB |     97%      Default |
-    +-------------------------------+----------------------+----------------------+
-                                                                                   
-    +-----------------------------------------------------------------------------+
-    | Processes:                                                       GPU Memory |
-    |  GPU       PID   Type   Process name                             Usage      |
-    |=============================================================================|
-    |  No running processes found                                                 |
-    +-----------------------------------------------------------------------------+
+    # the following refers to https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+       && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+       sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+       sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+    sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list
+    sudo apt-get update
+    
+    sudo apt-get install -y nvidia-container-toolkit
+    sudo nvidia-ctk runtime configure --runtime=docker
+  
+    sudo systemctl restart docker
+    ```
 
     ```
-  *Note:  Nvidia drivers must be installed on the host machine and be aware of NVIDIA Driver Version.
+    # the following refers to https://blog.csdn.net/ys5773477/article/details/133642150
+    sudo curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey
+    sudo apt-key add -distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+    sudo curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list
+    sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+    sudo apt-get update
+    
+    sudo apt-get install nvidia-container-runtime
+    
+    systemctl restart docker
+    ```
 
 ## Run docker image without entrance
 
@@ -46,5 +49,12 @@ sudo docker run -idt \
     --ulimit core=-1 \
     --security-opt seccomp=unconfined \
     gcr.io/xxxxxx/yyy:zzz sleep infinity
+
+sudo docker run -d \
+  --gpus all \
+  -v ~/aa:/tmp/aa \
+  -v /data/bb:/tmp/bb \
+  -v /data/code:/cache/code \
+  -it gcr.io/xxxxxx/yyy:zzz sleep infinity
  ```
  
