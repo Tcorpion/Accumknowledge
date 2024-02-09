@@ -56,5 +56,13 @@ sudo docker run -d \
   -v /data/bb:/tmp/bb \
   -v /data/code:/cache/code \
   -it gcr.io/xxxxxx/yyy:zzz sleep infinity
+
+# specify gpu id to container
+sudo docker run -d \
+  --gpus \"device=0,3\" \
+  -v ~/aa:/tmp/aa \
+  -v /data/bb:/tmp/bb \
+  -v /data/code:/cache/code \
+  -it gcr.io/xxxxxx/yyy:zzz sleep infinity
  ```
  
